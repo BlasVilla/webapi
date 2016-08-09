@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using AcademySample.Models;
@@ -9,19 +10,30 @@ namespace AcademySample.Controllers
     [Route("api/computers")]
     public class ComputerDetailsController : Controller
     {
+        private readonly ComputerDbContext _db;
+
+        public ComputerDetailsController(ComputerDbContext db)
+        {
+            if (db == null)
+            {
+                throw new ArgumentNullException(nameof(db));
+            }
+
+            _db = db;
+        }
 
         [HttpGet]
         [Route("", Name = "GetAllComputerDetails")]
         public ComputerDetails[] GetAll()
         {
-            return DummyData.Computers.ToArray();
+            return _db.ComputerDetails.ToArray();
         }
 
         [HttpGet]
         [Route("{computerId}", Name = "GetComputerById")]
         public ComputerDetails GetById(string computerId)
         {
-            return DummyData.Computers.SingleOrDefault(c => c.Name == computerId);
+            return _db.ComputerDetails.SingleOrDefault(c => c.Name == computerId);
         }
 
         [HttpDelete]
