@@ -36,15 +36,28 @@ namespace AcademySample.Controllers
             return _db.ComputerDetails.SingleOrDefault(c => c.Name == computerId);
         }
 
+        [HttpPost]
+        [Route("")]
+        public IActionResult Add([FromBody] ComputerDetails computerDetails)
+        {
+            _db.ComputerDetails.Add(computerDetails);
+
+            _db.SaveChanges();
+
+            return Ok();
+        }
+
         [HttpDelete]
         [Route("{computerId}")]
         public IActionResult Delete(string computerId)
         {
-            var computer = DummyData.Computers.SingleOrDefault(c => c.Name == computerId);
+            var computer = _db.ComputerDetails.SingleOrDefault(c => c.Name == computerId);
 
             if (computer != null)
             {
-                DummyData.Computers.Remove(computer);
+                _db.ComputerDetails.Remove(computer);
+
+                _db.SaveChanges();
             }
 
             return Ok();
