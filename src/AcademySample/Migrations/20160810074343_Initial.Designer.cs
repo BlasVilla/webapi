@@ -8,9 +8,10 @@ using AcademySample.Models;
 namespace AcademySample.Migrations
 {
     [DbContext(typeof(ComputerDbContext))]
-    partial class ComputerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160810074343_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431");

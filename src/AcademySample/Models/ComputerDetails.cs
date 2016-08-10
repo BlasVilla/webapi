@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AcademySample.Models
 {
@@ -12,5 +13,11 @@ namespace AcademySample.Models
         public int Memory { get; set; }
 
         public string User { get; set; }
+
+        #region Dependencies
+
+        public ICollection<UsageData> UsageData { get; set; }
+
+        #endregion
     }
 }

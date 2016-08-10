@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AcademySample.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AcademySample.Controllers
 {
@@ -47,6 +48,33 @@ namespace AcademySample.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        [Route("{computerId}/data")]
+        public UsageData[] GetUsageDataByComputerId(string computerId)
+        {
+            return _db.UsageData.Where(u => u.ComputerName == computerId).ToArray();
+        }
+
+        [HttpPost]
+        [Route("{computerId}/data")]
+        public IActionResult AddUsageData(string computerId, [FromBody] UsageData usageData)
+        {
+            usageData.ComputerName = computerId;
+
+            usageData.ComputerDetails = null;
+
+            var computer = _db.ComputerDetails.Include(cd => cd.UsageData).SingleOrDefault(cd => cd.Name == computerId);
+
+            if (computer != null)
+            {
+                computer.UsageData.Add(usageData);
+
+                _db.SaveChanges();
+            }
+            
+            return Ok();
+        }
+
         [HttpDelete]
         [Route("{computerId}")]
         public IActionResult Delete(string computerId)
@@ -61,17 +89,6 @@ namespace AcademySample.Controllers
             }
 
             return Ok();
-        }
-    }
-
-    public class DummyData
-    {
-        public static IList<ComputerDetails> Computers { get; }
-
-        static DummyData()
-        {
-            Computers = new List<ComputerDetails>(new [] { new ComputerDetails { Name = "computer 1" },
-                new ComputerDetails { Name = "computer 2" }});
         }
     }
 }
