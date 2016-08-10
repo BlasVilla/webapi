@@ -34,6 +34,16 @@ namespace AcademySample
             // Add framework services.
             services.AddMvc();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AnyOrigin",
+                    builder => builder
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowAnyOrigin()
+                        .AllowCredentials());
+            });
+
             services.AddSwaggerGen();
 
             services.AddDbContext<ComputerDbContext>(options => options.UseSqlite(connectionString));
@@ -45,6 +55,8 @@ namespace AcademySample
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.UseCors("AnyOrigin");
 
             app.UseMvc();
             

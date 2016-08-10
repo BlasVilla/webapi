@@ -5,6 +5,7 @@
             "type": "platform"
         },
         "Microsoft.AspNetCore.Mvc": "1.0.0",
+        "Microsoft.AspNetCore.Cors": "1.0.0",
         "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
         "Microsoft.AspNetCore.Server.Kestrel": "1.0.0",
         "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.0.0",
@@ -29,10 +30,6 @@
 
     "frameworks": {
         "netcoreapp1.0": {
-            "imports": [
-                "dotnet5.6",
-                "portable-net45+win8"
-            ]
         }
     },
 
