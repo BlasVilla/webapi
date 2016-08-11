@@ -34,43 +34,13 @@ namespace AcademySample.Controllers
         {
             bool Filter(ComputerDetails dt);
         }
-
-        public class FilterById : IFilteringStrategy
-        {
-            private readonly string _id;
-
-            public FilterById(string id)
-            {
-                _id = id;
-            }
-
-            public bool Filter(ComputerDetails dt)
-            {
-                return dt.Name == _id;
-            }
-        }
-
-        public class FilterByIpAddress : IFilteringStrategy
-        {
-            private readonly string _ipAddress;
-
-            public FilterByIpAddress(string ipAddress)
-            {
-                _ipAddress = ipAddress;
-            }
-
-            public bool Filter(ComputerDetails dt)
-            {
-                return dt.IpAddress == _ipAddress;
-            }
-        }
+        
 
         [HttpGet]
         [Route("{computerId}", Name = "GetComputerById")]
         public ComputerDetails GetById(string computerId)
         {
-            var strategy = new FilterById(computerId);
-            return _db.ComputerDetails.SingleOrDefault(c => strategy.Filter(c));
+            return _db.ComputerDetails.SingleOrDefault(c => c.Name == computerId);
         }
 
         [HttpPost]

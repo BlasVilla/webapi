@@ -1,15 +1,13 @@
-﻿namespace SendToWebAPI.Models
+﻿using System;
+
+namespace SendToWebAPI.Models
 {
     public class NewUsageData
     {
-        public ushort HostId { get; set; }
+        public DateTime TimeStamp { get; set; }
         
-        public string Name { get; set; }
+        public double ProcessorUsage { get; set; }
         
-        public States State { get; set; }
-        
-        public int VirtualProcessorCount { get; set; }
-        
-        public Memory VirtualMemory { get; set; }
+        public double MemoryUsage { get; set; }
     }
 }
